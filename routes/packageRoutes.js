@@ -1,8 +1,8 @@
-import express from "express";
-import { getPackages, addPackage } from "../controllers/packageController.js";
+const express = require("express");
 const router = express.Router();
+const ctrl = require("../controllers/packageController");
 
-router.get("/", getPackages);
-router.post("/", addPackage);
+router.get("/", ctrl.getAllPackages);
+router.get("/:id", ctrl.getPackageDetails);
 
-export default router;
+module.exports = router;

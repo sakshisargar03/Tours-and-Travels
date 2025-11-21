@@ -15,15 +15,26 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+const mongoose = require("mongoose");
+const session = require("express-session");
+require("dotenv").config();
 
-app.use("/api/auth", authRoutes);
-app.use("/api/events", eventRoutes);
-app.use("/api/packages", packageRoutes);
-app.use("/api/tourism", tourismRoutes);
-app.use("/api/hotels", hotelRoutes);
-app.use("/api/compare", compareRoutes);
-app.use("/api/booking", bookingRoutes);
+app.set("view engine", "ejs");
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static("public"));
+
+app.use(session({ secret: "secret123", resave: false, saveUninitialized: true }));
+
+mongoose.connect("mongodb://localhost:27017/travel");
+
+// ROUTES
+app.use("/packages", require("./routes/packageRoutes"));
+app.use("/places", require("./routes/placeRoutes"));
+app.use("/users", require("./routes/userRoutes"));
+app.use("/booking", require("./routes/bookingRoutes"));
+
+app.get("/", (req, res) => res.render("index"));
 
 app.listen(5000, () => console.log("Server running on 5000"));

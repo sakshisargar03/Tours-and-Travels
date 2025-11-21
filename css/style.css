@@ -1,0 +1,97 @@
+/* General Setup */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #007bff;
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    margin: 0 0 10px;
+    font-size: 2.5em;
+}
+
+/* Filter Container */
+.filter-container {
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+#packageType {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* Packages Container Grid */
+#packagesContainer {
+    display: grid;
+    /* Basic responsive grid: 2 columns on desktop, 1 on mobile */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Individual Package Card */
+.package-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.package-card img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.package-card h3 {
+    color: #007bff;
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.package-card p {
+    line-height: 1.6;
+}
+
+/* Hotel/Places Lists */
+.package-card h4 {
+    margin: 15px 0 5px;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.package-card ul {
+    list-style: disc inside;
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+
+/* Map Area */
+.map {
+    height: 200px; /* Maps need a defined height to render */
+    width: 100%;
+    border-radius: 4px;
+    margin-top: 15px;
+}

@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f2f2f2;
+}
+
+/* NAVBAR */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+    background: #003366;
+    color: white;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-content {
+    display: none;
+    background: white;
+    position: absolute;
+    padding: 10px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* HERO */
+.hero {
+    background: url('../images/banner.jpg');
+    text-align: center;
+    padding: 120px 30px;
+    color: white;
+    background-size: cover;
+}
+
+.btn {
+    background: #ff6600;
+    padding: 12px 22px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-small {
+    border-radius: 5px;
+    background: #003366;
+    padding: 8px 12px;
+    color: white;
+    text-decoration: none;
+}
+
+/* GRID */
+.package-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 40px;
+}
+
+.package-card {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    width: 280px;
+}
+
+.package-card img {
+    width: 100%;
+    height: 180px;
+}
+
+.price {
+    font-weight: bold;
+    color: green;
+}
+
+/* DETAILS */
+.details-container {
+    display: flex;
+    padding: 40px;
+    gap: 30px;
+}
+
+.big-img {
+    width: 100%;
+    height: 280px;
+}
+
+#map {
+    width: 350px;
+    height: 350px;
+    background: #ddd;
+}
+
+/* FORM */
+.form-container {
+    width: 350px;
+    margin: 50px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+}

@@ -1,13 +1,13 @@
-import Booking from "../models/Booking.js";
-import generateQR from "../utils/generateQR.js";
+const Booking = require("../models/Booking");
 
-export const createBooking = async (req, res) => {
-  const qr = await generateQR(req.body);
+exports.createBooking = async (req, res) => {
+    const booking = await Booking.create({
+        userId: req.session.user._id,
+        packageId: req.body.packageId,
+        date: req.body.date,
+        persons: req.body.persons,
+        totalAmount: req.body.totalAmount
+    });
 
-  const booking = await Booking.create({
-    ...req.body,
-    qrCode: qr
-  });
-
-  res.json({ msg: "Booking Successful", booking });
+    res.render("success", { booking });
 };

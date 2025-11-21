@@ -3,9 +3,12 @@
   <div class="dropdown">
     <button class="dropbtn">Holidays</button>
     <div class="dropdown-content">
-      <% types.forEach(type => { %>
-        <a href="#" class="holiday-type" data-type="<%= type %>"><%= type %></a>
-      <% }) %>
+      
+      <a href="/packages?type=Adventure">Adventure</a>
+      <a href="/packages?type=Relaxation">Relaxation</a>
+      <a href="/packages?type=Cultural">Cultural</a>
+      <a href="/packages?type=Wildlife">Wildlife</a>
+  
     </div>
   </div>
   <a href="#">Destinations</a>

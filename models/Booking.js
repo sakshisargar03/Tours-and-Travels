@@ -1,11 +1,17 @@
-import mongoose from "mongoose";
-
 const bookingSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  event: { type: mongoose.Schema.Types.ObjectId, ref: "Event" },
-  package: { type: mongoose.Schema.Types.ObjectId, ref: "Package" },
+  userName: String,
+  userEmail: String,
+  bookingType: { type:String, enum:['event','package','combo'] },
+  itemId: { type: mongoose.Schema.Types.ObjectId, required:true, refPath: 'onModel' },
+  onModel: { type:String, required:true, enum:['Event','Package'] },
+  seats: Number,            // for event
+  travellers: Number,       // for package
   totalPrice: Number,
-  qrCode: String
+  paymentStatus: { type:String, enum:['pending','paid','failed'], default:'pending' },
+  paymentDetails: Object,
+  qrCodeDataUrl: String,
+  createdAt: { type:Date, default:Date.now }
 });
 
-export default mongoose.model("Booking", bookingSchema);
+export default mongoose.model('Booking', bookingSchema);
+import mongoose from 'mongoose';

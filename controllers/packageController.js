@@ -1,11 +1,11 @@
-import Package from "../models/package.js";
+const Package = require("../models/package");
 
-export const getPackages = async (req, res) => {
-  const data = await Package.find().populate("comboEvent");
-  res.json(data);
+exports.getAllPackages = async (req, res) => {
+    const packages = await Package.find().populate("places");
+    res.render("packages", { packages });
 };
 
-export const addPackage = async (req, res) => {
-  const data = await Package.create(req.body);
-  res.json({ msg: "Package Added", data });
+exports.getPackageDetails = async (req, res) => {
+    const pkg = await Package.findById(req.params.id).populate("places");
+    res.render("package-details", { pkg, apiKey: process.env.MAP_KEY });
 };

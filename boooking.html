@@ -1,0 +1,20 @@
+document.querySelector('form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const payload = {
+    userName: document.querySelector('#name').value,
+    userEmail: document.querySelector('#email').value,
+    bookingType: 'package',
+    itemId: localStorage.getItem('selectedPackageId'), // set when opening details
+    onModel: 'Package',
+    travellers: Number(document.querySelector('#persons').value)
+  };
+  const res = await fetch('http://localhost:5000/api/bookings', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  // show QR / redirect to success
+  localStorage.setItem('lastBooking', JSON.stringify(data.booking));
+  window.location.href = 'success.html';
+});
