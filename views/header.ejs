@@ -1,0 +1,15 @@
+<nav class="navbar">
+  <a href="/">Home</a>
+  <div class="dropdown">
+    <button class="dropbtn">Holidays</button>
+    <div class="dropdown-content">
+      <% types.forEach(type => { %>
+        <a href="#" class="holiday-type" data-type="<%= type %>"><%= type %></a>
+      <% }) %>
+    </div>
+  </div>
+  <a href="#">Destinations</a>
+  <a href="#">Travel Modes</a>
+  <a href="#">Offers</a>
+  <a href="#">My Trips</a>
+</nav>
