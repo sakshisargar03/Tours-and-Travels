@@ -1,7 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const homeController = require('../controllers/homeController');
+const express = require("express");
+const app = express();
+const path = require("path");
 
-router.get('/', homeController.getHomePage);
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-module.exports = router;
+// Public static files
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
+const homeRoutes = require("./routes/homeRoutes");
+app.use("/", homeRoutes);
+
+app.listen(5000, () => {
+    console.log("Server running on http://localhost:5000");
+});

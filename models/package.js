@@ -1,22 +1,25 @@
-import mongoose from 'mongoose';
+const mongoose = require("mongoose");
 
 const packageSchema = new mongoose.Schema({
-  name: { type:String, required:true },
-  type: { type:String },       // Dream Holiday/Honeymoon/Adventure/Family
-  description: String,        // detailed itinerary + place descriptions
-  days: Number,
-  price: Number,
-  image: String,
-  hotels: [{ name:String, rating:Number, price:Number }],
-  places: [{                 // each place in itinerary
-    name: String,
-    description: String,     // place specific description (history, tip)
-    lat: Number,
-    lng: Number,
-    durationHours: Number    // approx time to spend
-  }],
-  location: { lat:Number, lng:Number }, // main location for map
-  comboEvent: { type: mongoose.Schema.Types.ObjectId, ref:'Event' }
-}, { timestamps:true });
+    title: String,
+    description: String,
+    days: Number,
+    nights: Number,
+    city: String,
+    state: String,
+    country: String,
+    basePrice: Number,
+    images: [String],
+    itinerary: [
+        {
+            day: Number,
+            title: String,
+            activities: [String],
+            mealsIncluded: Boolean
+        }
+    ],
+    isDynamic: { type: Boolean, default: false }, // User customisation
+    createdAt: { type: Date, default: Date.now }
+});
 
-export default mongoose.model('Package', packageSchema);
+module.exports = mongoose.model("Package", packageSchema);

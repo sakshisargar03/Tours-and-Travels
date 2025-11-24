@@ -11,3 +11,16 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
+
+const mongoose = require("mongoose");
+
+function connectDB() {
+    mongoose.connect("mongodb://localhost:27017/ecom").then(() => {
+        console.log("MongoDB connected");
+    }).catch((error) => {
+        console.error("MongoDB connection error:", error);
+    });
+}
+
+
+module.exports = connectDB;
