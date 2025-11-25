@@ -4,7 +4,7 @@ exports.getHomePage = async (req, res) => {
   try {
     
     const packages = await Package.find(); // DB मधून packages आणतो
-    const types = ['Dream Holiday', 'Honeymoon', 'Adventure', 'Family', 'Cultural'];
+    const types = ['Dream Holiday', 'Adventure', 'Family', 'Cultural'];
 
     res.render('home', { 
       packages,
