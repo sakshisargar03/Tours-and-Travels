@@ -10,6 +10,18 @@ const userSchema = new mongoose.Schema({
         enum: ["user", "admin", "agent", "corporate"],
         default: "user"
     },
+
+    priceRange: {
+        min: Number,
+        max: Number
+    },
+    policies: {
+        cancellation: String,
+        refund: String,
+        reschedule: String
+    },  
+
+    
     walletBalance: { type: Number, default: 0 },
     recentSearches: [{ type: mongoose.Schema.Types.ObjectId, ref: "RecentSearch" }],
     createdAt: { type: Date, default: Date.now }

@@ -10,6 +10,10 @@ const bookingSchema = new mongoose.Schema({
   paymentStatus: { type:String, enum:['pending','paid','failed'], default:'pending' },
   paymentDetails: Object,
   qrCodeDataUrl: String,
+  details: Object,
+  wallet : { type:Number, default:0 },
+  agent: { type: mongoose.Schema.Types.ObjectId, ref: 'Agent' },
+  discountApplied: Number,
   createdAt: { type:Date, default:Date.now }
 });
 
