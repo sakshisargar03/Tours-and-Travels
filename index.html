@@ -1,477 +1,658 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>TravelX Holidays</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelX - Explore the World</title>
 
+    <!-- 1. FONTS & ICONS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- 2. CSS STYLING -->
+    <style>
+        :root {
+            --primary-red: #e31e24; /* SOTC Style Red */
+            --dark-blue: #00305b;
+            --text-grey: #555;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-light);
+            color: #333;
+            padding-top: 70px; /* Fixed Navbar Space */
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            background: white;
+        }
+        .navbar-brand {
+            color: var(--primary-red) !important;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        .nav-link {
+            font-weight: 600;
+            color: var(--dark-blue) !important;
+            margin-left: 10px;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-red) !important;
+        }
+        .nav-icon {
+            margin-right: 6px;
+            color: var(--primary-red);
+        }
+
+        /* --- CAROUSEL --- */
+        .carousel-item {
+            height: 85vh;
+            min-height: 500px;
+            background-position: center;
+            background-size: cover;
+        }
+        .carousel-item::before {
+            content: "";
+            position: absolute;
+            top:0; left:0; right:0; bottom:0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+        }
+        .carousel-caption {
+            bottom: 25%;
+            text-align: left;
+        }
+        .carousel-caption h1 {
+            font-size: 4rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* --- NATURE BANNER (New Requirement) --- */
+        .nature-banner {
+            background-image: url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax Effect */
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            margin-bottom: 50px;
+        }
+        .nature-banner::before {
+            content: '';
+            position: absolute;
+            top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.4);
+        }
+        .nature-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        /* --- CARDS --- */
+        .region-card, .state-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            height: 350px;
+            cursor: pointer;
+            transition: transform 0.4s, box-shadow 0.4s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .region-card:hover, .state-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .card-bg {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s;
+        }
+        .region-card:hover .card-bg, .state-card:hover .card-bg {
+            transform: scale(1.1);
+        }
+        .card-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 20px;
+            color: white;
+        }
+
+        /* --- REELS VIDEO CARD --- */
+        .reel-card {
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            height: 100%;
+        }
+        .reel-video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 177.77%; /* 9:16 Aspect Ratio (Portrait/Reel) */
+            background: black;
+        }
+        .reel-video-container iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+        .place-info {
+            padding: 15px;
+        }
+
+        /* --- PAGE VIEWS (SPA Logic) --- */
+        .page-view {
+            display: none; /* Hide all views by default */
+            animation: fadeIn 0.6s;
+        }
+        .active-view {
+            display: block; /* Only show active */
+        }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+        .section-heading {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+        .section-heading::after {
+            content: ''; width: 80px; height: 4px; background: var(--primary-red);
+            position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+        }
+
+    </style>
+</head>
 <body>
 
     <!-- NAVBAR -->
-    <header>
-        <div class="logo">TravelX</div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showView('home')">TRAVEL<span style="color:#333">X</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showView('home')"><i class="fas fa-home nav-icon"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showView('flights')"><i class="fas fa-plane nav-icon"></i>Flights</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showView('cabs')"><i class="fas fa-taxi nav-icon"></i>Cabs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showView('trains')"><i class="fas fa-train nav-icon"></i>Trains</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showView('buses')"><i class="fas fa-bus nav-icon"></i>Bus</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showView('maps')"><i class="fas fa-map-marked-alt nav-icon"></i>Map</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-                <li class="dropdown">
-                    <a href="#">Holiday Types ▾</a>
-                    <div class="dropdown-content">
-                        <a href="packages.html?type=honeymoon">Honeymoon</a>
-                        <a href="packages.html?type=family">Family</a>
-                        <a href="packages.html?type=adventure">Adventure</a>
-                        <a href="packages.html?type=nature">Nature</a>
-                    </div>
-                </li>
-
-                <li><a href="packages.html">Packages</a></li>
-                <li><a href="#">Map Explorer</a></li>
-                <li><a href="#">Hotels</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- HERO -->
-    <section class="hero">
-        <h1>Plan Your Dream Holiday</h1>
-        <p>Discover amazing places, luxurious hotels, and the best holiday packages.</p>
-
-        <a href="packages.html" class="btn">Explore Packages</a>
+    <!-- ========================================= -->
+    <!-- VIEW 1: HOME PAGE (REGIONS)               -->
+    <!-- ========================================= -->
+    <div id="view-home" class="page-view active-view">
         
-    </section>
+        <!-- Hero Carousel -->
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500">
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop');">
+                    <div class="container h-100 position-relative">
+                        <div class="carousel-caption">
+                            <h2 class="text-warning text-uppercase">Explore Nature</h2>
+                            <h1>Switzerland of India</h1>
+                            <p class="fs-4 d-none d-md-block text-white">Visit Kashmir & Himalayas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop');">
+                    <div class="container h-100 position-relative">
+                        <div class="carousel-caption">
+                            <h2 class="text-warning text-uppercase">Beach Vibes</h2>
+                            <h1>Goa & Andamans</h1>
+                            <p class="fs-4 d-none d-md-block text-white">Blue waters and golden sands.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+        </div>
 
-    <!-- POPULAR PACKAGES -->
-    <section class="packages-section">
-        <h2>Popular Packages</h2>
+        <!-- Nature Background Section (Added as requested) -->
+        <div class="nature-banner">
+            <div class="nature-content">
+                <h1 class="display-4 fw-bold">Reconnect with Nature</h1>
+                <p class="lead">Experience the serenity of India's most beautiful natural landscapes. From misty mountains to lush green forests.</p>
+            </div>
+        </div>
 
-        <div class="package-grid">
+        <!-- Regions Grid -->
+        <section class="container py-5">
+            <h2 class="section-heading">Select a Region</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="region-card" onclick="loadRegion('north')">
+                        <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1598091383021-15ddea10925d?q=80&w=500');"></div>
+                        <div class="card-overlay">
+                            <h3>North India</h3>
+                            <p>Kashmir, Himachal, Uttarakhand</p>
+                            <span class="btn btn-sm btn-light rounded-pill px-3">View States <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="region-card" onclick="loadRegion('west')">
+                        <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=500');"></div>
+                        <div class="card-overlay">
+                            <h3>West India</h3>
+                            <p>Maharashtra, Goa, Gujarat</p>
+                            <span class="btn btn-sm btn-light rounded-pill px-3">View States <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="region-card" onclick="loadRegion('south')">
+                        <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=500');"></div>
+                        <div class="card-overlay">
+                            <h3>South India</h3>
+                            <p>Kerala, Tamil Nadu, Karnataka</p>
+                            <span class="btn btn-sm btn-light rounded-pill px-3">View States <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="region-card" onclick="loadRegion('east')">
+                        <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=500');"></div>
+                        <div class="card-overlay">
+                            <h3>East India</h3>
+                            <p>Sikkim, Bengal, Meghalaya</p>
+                            <span class="btn btn-sm btn-light rounded-pill px-3">View States <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-            <!-- CARD 1 -->
-            <div class="package-card">
-                <img src="images/goa.jpg" />
-                <h3>Goa Beach Holiday</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹12,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+    <!-- ========================================= -->
+    <!-- VIEW 2: STATES LIST (Dynamic)             -->
+    <!-- ========================================= -->
+    <div id="view-states" class="page-view">
+        <div class="container py-5">
+            <button onclick="showView('home')" class="btn btn-outline-dark mb-4"><i class="fas fa-arrow-left"></i> Back to Regions</button>
+            <h2 id="region-title" class="section-heading text-start">Select a State</h2>
+            <div class="row g-4" id="states-container">
+                <!-- States injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- VIEW 3: PLACES & HOTELS (Dynamic)         -->
+    <!-- ========================================= -->
+    <div id="view-places" class="page-view">
+        <div class="container py-5">
+            <button onclick="backToStates()" class="btn btn-outline-dark mb-4"><i class="fas fa-arrow-left"></i> Back to State List</button>
+            
+            <div class="text-center mb-5">
+                <h1 id="state-title" class="display-4 fw-bold text-primary">State Name</h1>
+                <p class="lead text-muted">Explore top destinations and premium stays.</p>
             </div>
 
-            <!-- CARD 2 -->
-            <div class="package-card">
-                <img src="images/manali.jpg" />
-                <h3>Manali Honeymoon</h3>
-                <p>5 Nights / 6 Days</p>
-                <p class="price">₹22,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+            <!-- REELS STYLE PLACES -->
+            <h3 class="mb-4 fw-bold text-danger"><i class="fas fa-play-circle"></i> Popular Places (Reels View)</h3>
+            <div class="row g-4" id="places-container">
+                <!-- Places injected via JS -->
             </div>
 
-            <!-- CARD 3 -->
-            <div class="package-card">
-                <img src="images/jaipur.jpg" />
-                <h3>Jaipur Royal Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹8,999</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+            <hr class="my-5">
+
+            <!-- HOTELS -->
+            <h3 class="mb-4 fw-bold text-primary"><i class="fas fa-hotel"></i> Recommended Hotels</h3>
+            <div class="row g-4" id="hotels-container">
+                <!-- Hotels injected via JS -->
             </div>
-            <div class="package-card">
-                <img src="images/kerala.jpg" />
-                <h3>Kerala Backwaters</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹18,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- 4. TRANSPORT & MAP VIEWS                  -->
+    <!-- ========================================= -->
+    
+    <div id="view-flights" class="page-view">
+        <div class="container py-5 text-center">
+            <h2 class="section-heading">Flight Search</h2>
+            <div class="p-5 bg-white shadow rounded">
+                <i class="fas fa-plane-departure fa-4x text-danger mb-3"></i>
+                <p>Flight booking module coming soon.</p>
+                <button class="btn btn-primary" onclick="showView('home')">Back Home</button>
             </div>
-            <div class="package-card">
-                <img src="images/andaman.jpg" />
-                <h3>Andaman Islands</h3>
-                <p>5 Nights / 6 Days</p>
-                <p class="price">₹30,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+        </div>
+    </div>
+
+    <div id="view-cabs" class="page-view">
+        <div class="container py-5 text-center">
+            <h2 class="section-heading">Cab Booking</h2>
+            <div class="p-5 bg-white shadow rounded">
+                <i class="fas fa-taxi fa-4x text-warning mb-3"></i>
+                <p>Safe and sanitized cabs available.</p>
+                <button class="btn btn-primary" onclick="showView('home')">Back Home</button>
             </div>
-            <div class="package-card">
-                <img src="images/rishikesh.jpg" />
-                <h3>Rishikesh Adventure</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹15,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+        </div>
+    </div>
+
+    <div id="view-trains" class="page-view">
+        <div class="container py-5 text-center">
+            <h2 class="section-heading">Train Tickets</h2>
+            <div class="p-5 bg-white shadow rounded">
+                <i class="fas fa-train fa-4x text-primary mb-3"></i>
+                <p>IRCTC authorized partner.</p>
+                <button class="btn btn-primary" onclick="showView('home')">Back Home</button>
             </div>
-            <div class="package-card">
-                <img src="images/udaipur.jpg" />
-                <h3>Udaipur Romantic Getaway</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹20,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+        </div>
+    </div>
+
+    <div id="view-buses" class="page-view">
+        <div class="container py-5 text-center">
+            <h2 class="section-heading">Bus Booking</h2>
+            <div class="p-5 bg-white shadow rounded">
+                <i class="fas fa-bus fa-4x text-success mb-3"></i>
+                <p>Luxury sleepers and Volvo buses.</p>
+                <button class="btn btn-primary" onclick="showView('home')">Back Home</button>
             </div>
-            <div class="package-card">
-                <img src="images/sikkim.jpg" />
-                <h3>Sikkim Nature Escape</h3>
-                <p>6 Nights / 7 Days</p>
-                <p class="price">₹25,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+        </div>
+    </div>
+
+    <div id="view-maps" class="page-view">
+        <div class="container py-5">
+            <h2 class="section-heading">Explore Map</h2>
+            <div class="ratio ratio-16x9 border rounded shadow">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15282225.79979123!2d73.72943147421966!3d20.750301298393563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1716298242134!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
             </div>
-            <div class="package-card">
-                <img src="images/ladakh.jpg" />
-                <h3>Ladakh Expedition</h3>
-                <p>7 Nights / 8 Days</p>
-                <p class="price">₹40,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+        </div>
+    </div>
+
+    <!-- BOOKING MODAL (Only opens for hotels) -->
+    <div class="modal fade" id="bookingModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Hotel Booking Enquiry</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="alert('Thank you! Our team will contact you shortly.'); return false;">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mobile Number</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Check-in Date</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Number of Guests</label>
+                            <input type="number" class="form-control" min="1" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Send Enquiry</button>
+                    </form>
+                </div>
             </div>
-            <div class="package-card">
-                <img src="images/agra.jpg" />
-                <h3>Agra Heritage Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹10,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container text-center">
+            <h3 class="text-danger fw-bold">TRAVELX</h3>
+            <p>Your premium travel partner.</p>
+            <div class="mt-3">
+                <i class="fab fa-facebook fa-lg mx-2"></i>
+                <i class="fab fa-instagram fa-lg mx-2"></i>
+                <i class="fab fa-youtube fa-lg mx-2"></i>
             </div>
-            <div class="package-card">
-                <img src="images/varanasi.jpg" />
-                <h3>Varanasi Spiritual Journey</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹14,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-            </div>
-            <div class="package-card">
-                <img src="images/mysore.jpg" />
-                <h3>Mysore Cultural Tour</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹16,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-            </div>
-            <div class="package-card">
-                <img src="images/shimla.jpg" />
-                <h3>Shimla Hill Station</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹13,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-            </div>
-            <div class="package-card">
-                <img src="images/coorg.jpg" />
-                <h3>Coorg Coffee Tour</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹19,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-            </div>
-            <div class="package-card">
-                <img src="images/darjeeling.jpg" />
-                <h3>Darjeeling Tea Trails</h3>
-                <p>5 Nights / 6 Days</p>
-                <p class="price">₹21,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-            </div>
-        <div class="package-card">
-                <img src="images/pondicherry.jpg" />
-                <h3>Pondicherry Coastal Escape</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹11,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
+            <p class="small mt-4 text-muted">&copy; 2025 TravelX Holidays.</p>
         </div>
-        <div class="package-card">
-                <img src="images/khajuraho.jpg" />
-                <h3>Khajuraho Heritage Walk</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹9,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-        <div class="package-card">
-                <img src="images/almora.jpg" />
-                <h3>Almora Mountain Retreat</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹17,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/hampi.jpg" />
-                <h3>Hampi Historical Tour</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹12,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/lonavala.jpg" />
-                <h3>Lonavala Weekend Getaway</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹8,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/munnar.jpg" />
-                <h3>Munnar Tea Gardens</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹18,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/jaisalmer.jpg" />  
-                <h3>Jaisalmer Desert Safari</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹15,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/khardungla.jpg" />
-                <h3>Khardungla Pass Adventure</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹14,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/gokarna.jpg" />
-                <h3>Gokarna Beach Retreat</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹13,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/ooty.jpg" />
-                <h3>Ooty Hill Station</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹16,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/nainital.jpg" />
-                <h3>Nainital Lake Holiday</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹12,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/mahabalipuram.jpg" />
-                <h3>Mahabalipuram Heritage Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹10,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/thanjavur.jpg" />
-                <h3>Thanjavur Cultural Experience</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹11,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/khajjiar.jpg" />
-                <h3>Khajjiar Lake Retreat</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹14,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/bhutan.jpg" />
-                <h3>Bhutan Cultural Tour</h3>
-                <p>5 Nights / 6 Days</p>
-                <p class="price">₹20,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/spiti.jpg" />
-                <h3>Spiti Valley Adventure</h3>
-                <p>5 Nights / 6 Days</p>
-                <p class="price">₹22,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
-                <div class="package-card">
-                <img src="images/tirupati.jpg" />
-                <h3>Tirupati Pilgrimage</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹9,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
+    </footer>
 
-                <div class="package-card">
-                <img src="images/konark.jpg" />
-                <h3>Konark Sun Temple Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹10,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- DATA ---
+        const travelData = {
+            'west': {
+                name: "West India",
+                states: [
+                    {
+                        id: 'maharashtra',
+                        name: "Maharashtra",
+                        img: "https://images.unsplash.com/photo-1562979314-bee7453e911c?q=80&w=500",
+                        desc: "Gateway of India, Caves & Hills",
+                        places: [
+                            { name: "Mumbai", videoId: "g2e604J16oA", desc: "City that never sleeps." },
+                            { name: "Lonavala", videoId: "N3u_H3W_-1E", desc: "Misty mountains." },
+                            { name: "Ajanta Ellora", videoId: "AD1Q1_jJ_5E", desc: "Ancient caves." },
+                            { name: "Mahabaleshwar", videoId: "h1_J3_g_s", desc: "Strawberry farms." }
+                        ],
+                        hotels: [
+                            { name: "Taj Mahal Palace, Mumbai", img: "https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg", price: "₹22,000" },
+                            { name: "Le Meridien, Mahabaleshwar", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=500", price: "₹14,000" }
+                        ]
+                    },
+                    {
+                        id: 'goa',
+                        name: "Goa",
+                        img: "https://images.unsplash.com/photo-1512343879784-a960bf2e6544?q=80&w=500",
+                        desc: "Beaches & Nightlife",
+                        places: [
+                            { name: "Baga Beach", videoId: "1i9T5n5B7g4", desc: "Party hub." },
+                            { name: "Dudhsagar Falls", videoId: "H01Xg9t4T2Y", desc: "Majestic waterfalls." },
+                            { name: "Old Goa", videoId: "K1_g_s", desc: "Historic churches." }
+                        ],
+                        hotels: [
+                            { name: "W Goa", img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=500", price: "₹18,000" }
+                        ]
+                    }
+                ]
+            },
+            'north': {
+                name: "North India",
+                states: [
+                    {
+                        id: 'kashmir',
+                        name: "Jammu & Kashmir",
+                        img: "https://images.unsplash.com/photo-1566837945700-30057527ade0?q=80&w=500",
+                        desc: "Paradise on Earth",
+                        places: [
+                            { name: "Dal Lake", videoId: "Fz-0j7QeQTA", desc: "Shikara rides." },
+                            { name: "Gulmarg", videoId: "9kQjF90-0fU", desc: "Snow skiing." },
+                            { name: "Pahalgam", videoId: "X_yVdDqFqjE", desc: "Valley of shepherds." }
+                        ],
+                        hotels: [
+                            { name: "Lalit Grand Palace", img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=500", price: "₹25,000" }
+                        ]
+                    },
+                    {
+                        id: 'himachal',
+                        name: "Himachal Pradesh",
+                        img: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=500",
+                        desc: "Land of Gods",
+                        places: [
+                            { name: "Manali", videoId: "M_g_s_1", desc: "Adventure sports." },
+                            { name: "Shimla", videoId: "S_h_i_m_l_a", desc: "Queen of hills." }
+                        ],
+                        hotels: [
+                            { name: "Wildflower Hall", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=500", price: "₹30,000" }
+                        ]
+                    }
+                ]
+            },
+            'south': {
+                name: "South India",
+                states: [
+                    {
+                        id: 'kerala',
+                        name: "Kerala",
+                        img: "https://images.unsplash.com/photo-1593693396885-55b56aa692eb?q=80&w=500",
+                        desc: "God's Own Country",
+                        places: [
+                            { name: "Alleppey", videoId: "R83BlU5nnbs", desc: "Houseboats." },
+                            { name: "Munnar", videoId: "1i1uQ8P3tqU", desc: "Tea gardens." }
+                        ],
+                        hotels: [
+                            { name: "Zuri Kumarakom", img: "https://images.unsplash.com/photo-1571896349842-33c57ff980aa?q=80&w=500", price: "₹16,000" }
+                        ]
+                    }
+                ]
+            },
+            'east': {
+                name: "East India",
+                states: [
+                    {
+                        id: 'sikkim',
+                        name: "Sikkim",
+                        img: "https://images.unsplash.com/photo-1627918376472-376566270390?q=80&w=500",
+                        desc: "Organic State",
+                        places: [
+                            { name: "Gangtok", videoId: "G_a_n_g_t_o_k", desc: "Capital city." },
+                            { name: "Nathula Pass", videoId: "N_a_t_h_u_l_a", desc: "Border pass." }
+                        ],
+                        hotels: [
+                            { name: "Mayfair Gangtok", img: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=500", price: "₹12,000" }
+                        ]
+                    }
+                ]
+            }
+        };
 
-                <div class="package-card">
-                <img src="images/ajanta.jpg" />
-                <h3>Ajanta Caves Exploration</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹12,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-                </div>
+        let currentRegionKey = '';
 
-        <div class="package-card">
-                <img src="images/birbhum.jpg" />
-                <h3>Birbhum Cultural Retreat</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹15,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+        function hideAllViews() {
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active-view');
+            });
+            window.scrollTo(0,0);
+        }
 
-        <div class="package-card">
-                <img src="images/matheran.jpg" />
-                <h3>Matheran Hilltop Escape</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹8,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+        function showView(viewId) {
+            hideAllViews();
+            document.getElementById('view-' + viewId).classList.add('active-view');
+        }
 
-        <div class="package-card">
-                <img src="images/yercaud.jpg" />
-                <h3>Yercaud Scenic Retreat</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹11,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+        function loadRegion(regionKey) {
+            currentRegionKey = regionKey;
+            const region = travelData[regionKey];
+            if(!region) return;
 
-        <div class="package-card">
-                <img src="images/velankanni.jpg" />
-                <h3>Velankanni Pilgrimage Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹9,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+            hideAllViews();
+            document.getElementById('view-states').classList.add('active-view');
+            
+            document.getElementById('region-title').innerHTML = `<span class="text-danger">${region.name}</span> - Select a State`;
+            const container = document.getElementById('states-container');
+            container.innerHTML = '';
 
-        <div class="package-card">
-                <img src="images/chikmagalur.jpg" />
-                <h3>Chikmagalur Coffee Escape</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹17,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+            region.states.forEach(state => {
+                const html = `
+                    <div class="col-md-4">
+                        <div class="state-card" onclick="loadState('${state.id}')">
+                            <div class="card-bg" style="background-image: url('${state.img}')"></div>
+                            <div class="card-overlay">
+                                <h3>${state.name}</h3>
+                                <p>${state.desc}</p>
+                                <span class="btn btn-sm btn-outline-light rounded-pill">View Places <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
 
-        <div class="package-card">
-                <img src="images/tawang.jpg" />
-                <h3>Tawang Monastery Tour</h3>
-                <p>5 Nights / 6 Days</p>
-                <p class="price">₹23,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+        function loadState(stateId) {
+            const region = travelData[currentRegionKey];
+            const state = region.states.find(s => s.id === stateId);
+            if(!state) return;
 
-        <div class="package-card">
-                <img src="images/panchgani.jpg" />
-                <h3>Panchgani Hill Station</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹12,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+            hideAllViews();
+            document.getElementById('view-places').classList.add('active-view');
+            document.getElementById('state-title').innerText = state.name;
 
-        <div class="package-card">
-                <img src="images/satpura.jpg" />
-                <h3>Satpura Wildlife Safari</h3>
-                <p>4 Nights / 5 Days</p>
-                <p class="price">₹19,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+            const placesContainer = document.getElementById('places-container');
+            placesContainer.innerHTML = '';
+            
+            state.places.forEach(place => {
+                const html = `
+                    <div class="col-md-6 col-lg-3">
+                        <div class="reel-card">
+                            <div class="reel-video-container">
+                                <iframe src="https://www.youtube.com/embed/${place.videoId}?controls=1&rel=0&modestbranding=1" allowfullscreen></iframe>
+                            </div>
+                            <div class="place-info text-center">
+                                <h5 class="fw-bold text-primary mb-1">${place.name}</h5>
+                                <p class="small text-muted mb-0">${place.desc}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                placesContainer.innerHTML += html;
+            });
 
-        <div class="package-card">
-                <img src="images/madurai.jpg" />
-                <h3>Madurai Temple Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹9,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+            const hotelsContainer = document.getElementById('hotels-container');
+            hotelsContainer.innerHTML = '';
 
-        <div class="package-card">
-                <img src="images/surat.jpg" />
-                <h3>Surat City Exploration</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹8,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
+            state.hotels.forEach(hotel => {
+                const html = `
+                    <div class="col-md-4">
+                        <div class="card hotel-card h-100 border-0 shadow-sm">
+                            <img src="${hotel.img}" class="card-img-top" style="height:220px; object-fit:cover;">
+                            <div class="card-body">
+                                <h5 class="fw-bold">${hotel.name}</h5>
+                                <p class="text-danger fw-bold fs-5">${hotel.price} <span class="small text-muted fw-normal">/ Night</span></p>
+                                <button class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                hotelsContainer.innerHTML += html;
+            });
+        }
 
-        <div class="package-card">
-                <img src="images/warangal.jpg" />
-                <h3>Warangal Heritage Tour</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹11,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/bikaner.jpg" />
-                <h3>Bikaner Desert Adventure</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹14,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/mumbai.jpg" />
-                <h3>Mumbai City Lights</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹10,500</p>
-        </div>
-
-        <div class="package-card">
-                <img src="images/chennai.jpg" />
-                <h3>Chennai Cultural Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹9,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/hyderabad.jpg" />
-                <h3>Hyderabad Heritage Walk</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹9,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/pune.jpg" />
-                <h3>Pune City Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹8,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/ahmedabad.jpg" />
-                <h3>Ahmedabad Cultural Experience</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹9,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/kolkata.jpg" />
-                <h3>Kolkata Heritage Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹9,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/bangalore.jpg" />
-                <h3>Bangalore City Highlights</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹8,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/jaipur2.jpg" />
-                <h3>Jaipur Forts and Palaces</h3>
-                <p>3 Nights / 4 Days</p>
-                <p class="price">₹12,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/delhi.jpg" />
-                <h3>Delhi City Tour</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹9,000</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-
-        <div class="package-card">
-                <img src="images/agra2.jpg" />
-                <h3>Agra Taj Mahal Visit</h3>
-                <p>2 Nights / 3 Days</p>
-                <p class="price">₹10,500</p>
-                <a href="package-details.html" class="btn-small">View Details</a>
-        </div>
-        </div>
-
-    </section>
-
-    <script src="js/script.js"></script>
+        function backToStates() {
+            loadRegion(currentRegionKey);
+        }
+    </script>
 </body>
-
 </html>

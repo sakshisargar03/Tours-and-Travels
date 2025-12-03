@@ -87,7 +87,7 @@ nav ul li a {
 
 .price {
     font-weight: bold;
-    color: green;
+    color: rgb(38, 39, 38);
 }
 
 /* DETAILS */
@@ -116,3 +116,68 @@ nav ul li a {
     background: white;
     border-radius: 10px;
 }
+
+.form-container input, .form-container select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 12px;
+    background: #003366;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* SUCCESS PAGE */
+.success-box {
+    text-align: center;
+    padding: 50px;
+    background: white;
+    margin: 100px auto;
+    width: 400px;
+    border-radius: 10px;
+}
+
+.success-box h1 {
+    color: #28a745;
+}
+
+.success-box p {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.success-box .btn {
+    background: #003366;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #003366;
+    color: white;
+    margin-top: 50px;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+    .package-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .details-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}   
+
+/* IGNORE BELOW THIS LINE */

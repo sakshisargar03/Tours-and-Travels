@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Package Details - TravelX</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+        }
+
+        .details-container {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        .banner img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .details-box {
+            background: #fff;
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .info-item {
+            background: #fafafa;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section ul {
+            padding-left: 20px;
+        }
+
+        .map iframe {
+            width: 100%;
+            height: 350px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-book {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #ff5a3c;
+            color: #fff;
+            border-radius: 8px;
+            margin-top: 25px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .btn-book:hover {
+            background: #e14a31;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">TravelX</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="packages.html">Packages</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="details-container">
+
+        <!-- BANNER -->
+        <div class="banner">
+            <img src="images/goa.jpg" alt="Goa">
+        </div>
+
+        <!-- MAIN DETAILS -->
+        <div class="details-box">
+            <h2>Goa Beach Holiday</h2>
+            <p>Experience the golden beaches, thrilling nightlife and peaceful sunsets of Goa.</p>
+
+            <div class="info-grid">
+                <div class="info-item"><strong>Duration:</strong> 3 Nights / 4 Days</div>
+                <div class="info-item"><strong>Price:</strong> ₹12,500 / person</div>
+                <div class="info-item"><strong>Location:</strong> Goa, India</div>
+            </div>
+        </div>
+
+        <!-- ITINERARY -->
+        <div class="details-box section">
+            <h2>🗓 Day-wise Itinerary</h2>
+            <ul>
+                <li><strong>Day 1:</strong> Arrival in Goa → Check-in → Beach visit → Dinner</li>
+                <li><strong>Day 2:</strong> North Goa sightseeing → Fort Aguada → Baga Beach → Nightlife</li>
+                <li><strong>Day 3:</strong> South Goa tour → Miramar Beach → Basilica of Bom Jesus</li>
+                <li><strong>Day 4:</strong> Shopping → Checkout</li>
+            </ul>
+        </div>
+
+        <!-- INCLUSIONS -->
+        <div class="details-box section">
+            <h2>✔ Inclusions</h2>
+            <ul>
+                <li>3 Nights Hotel Stay</li>
+                <li>Breakfast Included</li>
+                <li>Private AC Cab for sightseeing</li>
+                <li>Pickup & Drop</li>
+                <li>All Taxes Included</li>
+            </ul>
+        </div>
+
+        <!-- EXCLUSIONS -->
+        <div class="details-box section">
+            <h2>❌ Exclusions</h2>
+            <ul>
+                <li>Flight / Train Tickets</li>
+                <li>Extra meals not mentioned</li>
+                <li>Personal expenses</li>
+            </ul>
+        </div>
+
+        <!-- HOTEL DETAILS -->
+        <div class="details-box section">
+            <h2>🏨 Hotel Details</h2>
+            <p><strong>Hotel Name:</strong> Blue Waves Resort</p>
+            <p><strong>Room Type:</strong> Deluxe AC Room</p>
+            <p><strong>Amenities:</strong> Pool, WiFi, Room Service, Free Breakfast</p>
+        </div>
+
+        <!-- MAP -->
+        <div class="details-box section map">
+            <h2>📍 Location Map</h2>
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d490344.16705071837!2d73.6865196!3d15.347731299999993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbfea51a563dded%3A0x6d5e1b5a793bcee!2sGoa!5e0!3m2!1sen!2sin!4v1705140400000">
+            </iframe>
+        </div>
+
+        <!-- BOOK NOW -->
+        <a href="#" class="btn-book">Book Now</a>
+
+    </div>
+
+</body>
+
+</html>
